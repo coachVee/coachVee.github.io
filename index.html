@@ -659,7 +659,6 @@
             flex: 1;
             min-width: min(300px, 100%);
             position: relative;
-            /* Center the smaller image within its column */
             display: flex;
             justify-content: center;
         }
@@ -1425,9 +1424,9 @@
                 </div>
             </div>
             
-            <!-- Video added here -->
+            <!-- Video added here with strict autoplay attributes -->
             <div class="video-container reveal">
-                <video width="100%" height="auto" autoplay loop muted playsinline disablepictureinpicture>
+                <video id="signupVideo" width="100%" height="auto" autoplay loop muted playsinline webkit-playsinline preload="auto" disablepictureinpicture>
                     <source src="sign_up.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
@@ -1526,6 +1525,23 @@
                     navbar.classList.remove('scrolled');
                 }
             };
+
+            // Video Autoplay Enforcer for Mobile
+            const video = document.getElementById('signupVideo');
+            if(video) {
+                // Force muted property to ensure mobile browser compliance
+                video.muted = true;
+                // Attempt to play
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        // Automatic playback started!
+                    }).catch(error => {
+                        console.log("Auto-play was prevented. Interaction required.");
+                        // Optional: Add a UI button here if autoplay fails strictly
+                    });
+                }
+            }
 
             window.addEventListener('scroll', revealOnScroll);
             window.addEventListener('scroll', toggleNavbar);
