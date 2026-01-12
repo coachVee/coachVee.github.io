@@ -639,6 +639,24 @@
             overflow: hidden;
             border: 1px solid #333;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .video-container video {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .video-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
         }
 
         /* --- ABOUT FOUNDER --- */
@@ -659,6 +677,7 @@
             flex: 1;
             min-width: min(300px, 100%);
             position: relative;
+            /* Center the smaller image within its column */
             display: flex;
             justify-content: center;
         }
@@ -1279,7 +1298,7 @@
                         <li>
                             <i class="fas fa-check-circle check-icon"></i>
                             <div>
-                                <span class="gold-text">24/7 online access</span> via mobile app or student portal.<br>Study anytime, anywhere — at your pace.
+                                <span class="gold-text">24/7 online access</span> via mobile app or student portal.<br>Study anytime, anywhere – at your pace.
                             </div>
                         </li>
                         <li>
@@ -1424,9 +1443,9 @@
                 </div>
             </div>
             
-            <!-- Video added here with strict autoplay attributes -->
+            <!-- Video added here -->
             <div class="video-container reveal">
-                <video id="signupVideo" width="100%" height="auto" autoplay loop muted playsinline webkit-playsinline preload="auto" disablepictureinpicture>
+                <video id="signupVideo" width="100%" height="auto" autoplay loop muted playsinline webkit-playsinline disablepictureinpicture preload="auto">
                     <source src="sign_up.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
@@ -1452,7 +1471,7 @@
                     <p style="margin-bottom: 20px; color: #ccc;">With over six years of experience in the Financial Services industry, she brings a strong combination of real-world regulatory knowledge, structured coaching, and learner-focused development. Her background as a Learning and Development Associate Specialist and Product Coach allows her to translate complex industry requirements into clear, practical learning experiences.</p>
                     <p style="margin-bottom: 20px;">Beyond training content, Coach Vee is intentional about building supportive learning communities where students are guided, encouraged, and held accountable throughout their journey. She believes meaningful growth happens when knowledge, structure, and community come together—creating an environment where learners can confidently progress toward their career goals.</p>
                     <p style="margin-bottom: 20px;">Coach Vee provides education and training only and does not issue accredited qualifications or CPD points</p>
-                    <p style="font-style: italic; color: var(--accent-gold);">"Your future is created by what you do today, not tomorrow." — Robert Kiyosaki</p>
+                    <p style="font-style: italic; color: var(--accent-gold);">"Your future is created by what you do today, not tomorrow." – Robert Kiyosaki</p>
                 </div>
             </div>
         </div>
@@ -1526,29 +1545,25 @@
                 }
             };
 
-            // Video Autoplay Enforcer for Mobile
-            const video = document.getElementById('signupVideo');
-            if(video) {
-                // Force muted property to ensure mobile browser compliance
-                video.muted = true;
-                // Attempt to play
-                const playPromise = video.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(_ => {
-                        // Automatic playback started!
-                    }).catch(error => {
-                        console.log("Auto-play was prevented. Interaction required.");
-                        // Optional: Add a UI button here if autoplay fails strictly
-                    });
-                }
-            }
-
             window.addEventListener('scroll', revealOnScroll);
             window.addEventListener('scroll', toggleNavbar);
             
             // Trigger once on load
             revealOnScroll();
             toggleNavbar();
+
+            // Force video to play on mobile devices
+            const video = document.getElementById('signupVideo');
+            if (video) {
+                video.muted = true;
+                video.play().catch(error => {
+                    console.log('Video autoplay failed:', error);
+                    // Add play button if autoplay fails
+                    video.addEventListener('click', function() {
+                        this.play();
+                    });
+                });
+            }
         });
 
         // Pricing Carousel Scroll Function
