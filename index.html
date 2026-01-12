@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coach Vee | Independent Training Provider</title>
+    
+    <!-- Google Fonts for Typography matching the design -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --bg-dark: #050505;
+            --bg-light: #ffffff;
+            --bg-off-white: #f8f8f8; /* New off-white background color */
+            --bg-gray: #f4f4f4;
+            --text-primary: #ffffff;
+            --text-dark: #1a1a1a;
+            --accent-gold: #C5A065; /* The signature beige/gold */
+            --accent-gold-hover: #b08d55;
+            --transition-slow: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            --transition-fast: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        /* --- UTILITY CLASSES --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .gold-text { color: var(--accent-gold); }
+        .text-center { text-align: center; }
+
+        /* --- BUTTONS --- */
+        .btn {
+            display: inline-block;
+            padding: 12px 35px;
+            border: 1px solid var(--accent-gold);
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn-fill {
+            background-color: var(--accent-gold);
+            color: var(--bg-dark);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--bg-light);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(197, 160, 101, 0.2);
+        }
+
+        .btn-fill:hover {
+            background-color: var(--bg-light);
+            color: var(--bg-dark);
+            border-color: var(--bg-light);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--accent-gold);
+            border-color: var(--accent-gold);
+            color: var(--bg-dark);
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            z-index: 1000;
+            transition: var(--transition-fast);
+        }
+
+        nav.scrolled {
+            background: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: flex-end; /* Align items to the right */
+            align-items: center;
+        }
+
+        /* Removed .logo styling as the element is removed */
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            margin-right: auto; /* Push nav links to the left if the button is on the right */
+        }
+
+        .nav-links a {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0%;
+            height: 1px;
+            background-color: var(--accent-gold);
+            transition: var(--transition-fast);
+        }
+
+        .nav-links a:hover::after { width: 100%; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2671&auto=format&fit=crop'); /* Studying group image */
+            background-size: cover;
+            background-position: center;
+            opacity: 0.4;
+            transform: scale(1.1);
+            animation: zoomOut 20s infinite alternate;
+        }
+
+        @keyframes zoomOut {
+            from { transform: scale(1.1); }
+            to { transform: scale(1.2); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            padding: 0 20px; /* Added padding for smaller screens */
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero-logo-img {
+            width: 450px;
+            max-width: 90%;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap; /* Allow buttons to wrap on small screens */
+        }
+
+        /* --- TABLE OF CONTENTS (The 01-08 Section) --- */
+        .toc-section {
+            padding: 100px 0;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2670&auto=format&fit=crop');
+            background-attachment: fixed; /* Parallax */
+            background-size: cover;
+            position: relative;
+        }
+
+        .toc-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .toc-item {
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: var(--transition-fast);
+            cursor: pointer;
+        }
+
+        .toc-item:hover {
+            border-bottom: 1px solid var(--accent-gold);
+            transform: translateX(10px);
+        }
+
+        .toc-number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.2);
+            transition: var(--transition-fast);
+        }
+
+        .toc-item:hover .toc-number { color: var(--accent-gold); }
+
+        .toc-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- PRICING / PROGRAMMES CAROUSEL --- */
+        .programmes {
+            padding: 100px 0;
+            background-color: var(--bg-dark);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        /* Carousel Container */
+        .pricing-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Center the carousel on wider screens */
+        }
+
+        .pricing-grid {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding-bottom: 40px;
+            /* Hide scrollbar */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE 10+ */
+            scroll-snap-type: x mandatory;
+        }
+
+        .pricing-grid::-webkit-scrollbar { 
+            display: none; /* Chrome/Safari */
+        }
+
+        .scroll-btn {
+            background-color: rgba(255,255,255,0.1);
+            color: var(--accent-gold);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 1.2rem;
+            transition: var(--transition-fast);
+            flex-shrink: 0; /* Prevent buttons from shrinking */
+        }
+
+        .scroll-btn:hover {
+            background-color: var(--accent-gold);
+            color: var(--bg-dark);
+        }
+
+        .scroll-btn.left { margin-right: 15px; }
+        .scroll-btn.right { margin-left: 15px; }
+
+        .pricing-card {
+            min-width: 350px; /* Fixed width for carousel items */
+            background: #0f0f0f;
+            border: 1px solid #222;
+            padding: 30px;
+            text-align: center;
+            transition: var(--transition-slow);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            scroll-snap-align: center;
+        }
+
+        .card-header-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            filter: brightness(0.8);
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 3px;
+            background: var(--accent-gold);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: var(--transition-slow);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border-color: #333;
+        }
+
+        .pricing-card:hover::before { transform: scaleX(1); }
+
+        .price {
+            font-size: 2.2rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            margin: 15px 0;
+            color: var(--accent-gold);
+        }
+
+        .pricing-features {
+            text-align: left;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            color: #aaa;
+        }
+
+        .pricing-features li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .pricing-features li::before {
+            content: '•';
+            color: var(--accent-gold);
+            position: absolute;
+            left: 0;
+        }
+
+        /* --- ALUMNI (Testimonials) --- */
+        .alumni {
+            padding: 100px 0 0 0;
+            background-color: #0a0a0a;
+        }
+
+        .alumni-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjusted min-width for better responsiveness */
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .alumni-card {
+            text-align: center;
+            background: #111;
+            padding: 30px;
+            border-radius: 8px;
+            transition: var(--transition-fast);
+        }
+
+        .alumni-card:hover {
+            background: #161616;
+            transform: translateY(-5px);
+        }
+
+        .alumni-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            border: 2px solid var(--accent-gold);
+            padding: 3px;
+        }
+
+        .alumni-name {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--bg-light);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .alumni-text {
+            font-size: 0.9rem;
+            color: #ccc;
+            font-style: italic;
+            min-height: 80px; 
+        }
+
+        /* --- REVIEWS SECTION --- */
+        .reviews-section {
+            padding-top: 50px;
+            padding-bottom: 50px;
+            background-color: var(--bg-off-white);
+            color: var(--text-dark);
+            margin-left: calc(-50vw + 50%);
+            margin-right: calc(-50vw + 50%);
+            padding-left: calc(50vw - 50%);
+            padding-right: calc(50vw - 50%);
+        }
+
+        .reviews-section .section-header h2,
+        .reviews-section .text-center h3 {
+            color: var(--text-dark); /* Changed text to black */
+        }
+
+        .reviews-section .text-center {
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 20px;
+        }
+
+        .reviews-header-image {
+            width: 250px; /* Adjust size as needed */
+            margin: 0 auto 40px;
+            display: block;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjusted min-width for better responsiveness */
+            gap: 25px;
+            margin-top: 40px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 20px;
+        }
+
+        .review-image-card {
+            background-color: transparent; /* Assuming images have their own background */
+            border: none; /* No border for image cards */
+            border-radius: 0;
+            padding: 0;
+            transition: none;
+            cursor: default;
+        }
+        
+        .review-image-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px; /* Optional: subtle border-radius for the image */
+        }
+
+        /* Original review card styles, kept for reference if needed elsewhere */
+        .review-card {
+            background-color: #0f0f0f;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 30px;
+            transition: var(--transition-fast);
+            border-left: 3px solid transparent;
+        }
+
+        .review-card:hover {
+            border-left: 3px solid var(--accent-gold);
+            background-color: #141414;
+            transform: translateY(-3px);
+        }
+
+        .stars {
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .review-text {
+            font-size: 0.95rem;
+            color: #ccc;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .review-author {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--bg-light);
+            font-size: 0.9rem;
+        }
+
+        /* --- BENEFITS SECTION --- */
+        .benefits {
+            padding: 50px 0 80px 0;
+            background-color: var(--bg-off-white);
+            color: var(--text-dark);
+        }
+
+        .benefits h2 { 
+            color: var(--text-dark); 
+        }
+        
+        .benefits .gold-text { 
+            font-weight: 700; 
+        }
+        
+        .benefits p, .benefits li { 
+            color: var(--text-dark); 
+        }
+
+        .benefits-layout {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .benefits-content { flex: 1; }
+        .benefits-image { 
+            flex: 1; 
+            min-width: 300px;
+            position: relative;
+        }
+        
+        .benefits-image img {
+            border-radius: 4px;
+            box-shadow: 20px 20px 0 var(--accent-gold);
+        }
+
+        .benefit-list li {
+            margin-bottom: 25px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .check-icon {
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+            margin-top: 4px;
+        }
+
+        /* --- PROCESS STEPS --- */
+        .process {
+            padding: 100px 0;
+            background-color: var(--bg-dark);
+            color: var(--bg-light);
+        }
+
+        .step-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .step-line {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .step {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 50px;
+            position: relative;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-dark);
+            border: 2px solid var(--accent-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--accent-gold);
+            z-index: 1;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--accent-gold);
+        }
+
+        /* --- ABOUT FOUNDER --- */
+        .founder {
+            padding: 100px 0;
+            background-color: #111;
+        }
+
+        .founder-layout {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 50px;
+            flex-direction: row-reverse;
+        }
+
+        .founder-img {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .founder-img img {
+            transition: var(--transition-slow);
+            border-radius: 4px;
+            border: 1px solid #333;
+        }
+
+        .founder-text { flex: 1; }
+
+        /* --- DEVELOPMENT & CAREERS SECTION --- */
+        .development-careers-section {
+            background-image: url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2670&auto=format&fit=crop'); /* Same as TOC bg */
+            background-size: cover;
+            background-position: center;
+            padding: 100px 0;
+            color: var(--bg-light);
+            position: relative;
+            background-attachment: fixed; /* Parallax effect */
+        }
+
+        .development-careers-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Overlay for readability */
+        }
+
+        .development-careers-content {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+        }
+
+        .development-programmes h2 {
+            margin-bottom: 30px;
+            font-size: 2.2rem;
+            color: var(--bg-light);
+        }
+
+        .development-programmes ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .development-programmes li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .development-programmes li span {
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        .development-programmes .plus-icon {
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+            margin-top: 30px;
+            display: inline-block;
+        }
+
+        .careers-info {
+            text-align: right;
+        }
+
+        .careers-info h2 {
+            margin-bottom: 30px;
+            font-size: 2.2rem;
+            color: var(--bg-light);
+        }
+
+        .careers-info p {
+            color: #ccc;
+            font-size: 0.95rem;
+        }
+
+        /* --- FOOTER / CONTACT --- */
+        footer {
+            padding: 80px 0 30px;
+            background-color: black;
+            border-top: 1px solid #222;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-col h4 {
+            margin-bottom: 25px;
+            color: var(--bg-light);
+        }
+
+        .contact-info p {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ccc;
+        }
+        
+        .contact-info i { color: var(--accent-gold); }
+
+        .social-link {
+            font-size: 1.5rem;
+            color: var(--bg-light);
+            transition: var(--transition-fast);
+        }
+
+        .social-link:hover { color: #0077b5; } /* LinkedIn Blue */
+
+        .copyright {
+            text-align: center;
+            border-top: 1px solid #222;
+            padding-top: 20px;
+            color: #555;
+            font-size: 0.8rem;
+        }
+
+        /* --- ANIMATION UTILS --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: var(--transition-slow);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .stagger-delay:nth-child(1) { transition-delay: 100ms; }
+        .stagger-delay:nth-child(2) { transition-delay: 200ms; }
+        .stagger-delay:nth-child(3) { transition-delay: 300ms; }
+        .stagger-delay:nth-child(4) { transition-delay: 400ms; }
+        .stagger-delay:nth-child(5) { transition-delay: 500ms; }
+        .stagger-delay:nth-child(6) { transition-delay: 600ms; }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 1024px) {
+            .nav-inner { justify-content: space-between; } /* Re-center nav items for smaller desktops */
+            .nav-links { margin-right: 0; } /* Reset margin */
+            .development-careers-content { grid-template-columns: 1fr; } /* Stack columns */
+            .careers-info { text-align: left; margin-top: 40px; }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .nav-links { display: none; } /* Hide nav links on smaller screens, could add a hamburger menu */
+            .nav-inner { justify-content: flex-end; } /* Push button to the right if no logo/links */
+            .hero-logo-img { width: 250px; }
+            .hero p { font-size: 1rem; }
+            .toc-list { grid-template-columns: 1fr; } /* Stack TOC items */
+            .alumni-grid, .reviews-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); } /* Adjust min-width */
+            .benefits-layout, .founder-layout { flex-direction: column; }
+            .benefits-image { order: -1; width: 100%; box-shadow: 10px 10px 0 var(--accent-gold); } /* Adjust shadow */
+            .founder-img { width: 100%; }
+            .step-container { padding-left: 0; } /* Remove left padding */
+            .step { flex-direction: column; align-items: flex-start; }
+            .step-number { margin-bottom: 10px; }
+            .step-line { left: 18px; } /* Adjust line position for stacked steps */
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.8rem; }
+            .hero-buttons { flex-direction: column; }
+            .btn { width: 100%; }
+            .pricing-card { min-width: 100%; } /* Cards take full width */
+            .pricing-wrapper { flex-direction: column; } /* Stack buttons and grid */
+            .scroll-btn { margin: 10px auto; }
+            .scroll-btn.left, .scroll-btn.right { margin: 10px auto; }
+            .reviews-header-image { width: 180px; }
+            .development-programmes h2, .careers-info h2 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container nav-inner">
+            <!-- Removed the CoachVee text logo -->
+            <div class="nav-links">
+                <a href="#programmes">RE5 Programmes</a> <!-- Changed to RE5 Programmes -->
+                <a href="#alumni">Alumni</a>
+                <a href="#reviews">Reviews</a> <!-- Added Reviews link -->
+                <a href="#benefits">Benefits</a>
+                <a href="#development-careers">Development Programmes + Careers</a> <!-- New Navigation Link -->
+                <a href="#about">Founder</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <a href="https://www.patreon.com/cw/CoachVee" target="_blank" class="btn btn-fill" style="padding: 8px 20px;">Join Now</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content reveal active">
+            <img src="coach_vee_logo.png" alt="Coach Vee Logo" class="hero-logo-img">
+            
+            <h1>Take the next step toward<br>what matters to you.</h1>
+            <p>Coach Vee is an independent training provider supporting regulatory education, career growth, and professional wellbeing.</p>
+            <div class="hero-buttons">
+                <a href="https://www.patreon.com/login?ru=https%3A%2F%2Fwww.patreon.com%3A8000%2Fcheckout%2FCoachVee%3Frid%3D24613112" class="btn btn-fill">Member Login</a>
+                <a href="https://www.patreon.com/cw/CoachVee" class="btn btn-outline">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Table of Contents / Intro -->
+    <section class="toc-section">
+        <div class="container">
+            <div class="toc-list">
+                <a href="#programmes" class="toc-item reveal">
+                    <span class="toc-number">01</span>
+                    <span class="toc-text">RE5 Programmes</span>
+                </a>
+                <a href="#alumni" class="toc-item reveal">
+                    <span class="toc-number">02</span>
+                    <span class="toc-text">Alumni</span>
+                </a>
+                <a href="#reviews" class="toc-item reveal"> <!-- Linked to reviews section -->
+                    <span class="toc-number">03</span>
+                    <span class="toc-text">Reviews</span>
+                </a>
+                <a href="#benefits" class="toc-item reveal">
+                    <span class="toc-number">04</span>
+                    <span class="toc-text">Benefits + How to Apply</span>
+                </a>
+                 <a href="#development-careers" class="toc-item reveal"> <!-- New TOC Item -->
+                    <span class="toc-number">05</span>
+                    <span class="toc-text">Development Programmes + Careers</span>
+                </a>
+                <a href="#about" class="toc-item reveal">
+                    <span class="toc-number">06</span>
+                    <span class="toc-text">About the Founder</span>
+                </a>
+                <a href="#contact" class="toc-item reveal">
+                    <span class="toc-number">07</span>
+                    <span class="toc-text">Contact Us</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programmes / Pricing Carousel -->
+    <section id="programmes" class="programmes">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Choose Your Membership</h2>
+                <p style="color: #888;">Swipe to view all available packages.</p>
+            </div>
+
+            <div class="pricing-wrapper reveal">
+                <!-- Left Scroll Button -->
+                <button class="scroll-btn left" onclick="scrollGrid('left')"><i class="fas fa-chevron-left"></i></button>
+                
+                <div class="pricing-grid" id="pricingGrid">
+                    
+                    <!-- Card 1: RE05 (DISC) -->
+                    <div class="pricing-card">
+                        <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=2670&auto=format&fit=crop" class="card-header-img" alt="Training Package">
+                        <div>
+                            <h3>Training Package RE05</h3>
+                            <p style="font-size:0.9rem; color:#888;">Classroom (DISC)</p>
+                            <div class="price">R400 <span style="font-size:1rem; color:#888;">/ month</span></div>
+                            <p style="font-size:0.8rem; text-align:left; color:#ccc; margin-bottom:10px;">For 2026 Students</p>
+                            <ul class="pricing-features">
+                                <li>Unlock your full study potential with this membership tier!</li>
+                                <li>Affiliated with Disc Corporate Group.</li>
+                            </ul>
+                        </div>
+                        <a href="https://www.patreon.com/login?ru=https%3A%2F%2Fwww.patreon.com%3A8000%2Fcheckout%2FCoachVee%3Frid%3D24613112" class="btn btn-fill">Join</a>
+                    </div>
+
+                    <!-- Card 2: Middle Level -->
+                    <div class="pricing-card">
+                        <img src="https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?q=80&w=2669&auto=format&fit=crop" class="card-header-img" alt="Middle Level">
+                        <div>
+                            <h3>Middle Level | RE5</h3>
+                            <p style="font-size:0.9rem; color:#888;">Classroom Package</p>
+                            <div class="price">R470 <span style="font-size:1rem; color:#888;">/ month</span></div>
+                            <ul class="pricing-features">
+                                <li>Unlock your full study potential with this membership tier!</li>
+                                <li>This classroom option is tailored for students with prior Financial Services industry experience.</li>
+                                <li>Advanced concepts & deeper technical analysis.</li>
+                            </ul>
+                        </div>
+                        <a href="https://www.patreon.com/login?ru=https%3A%2F%2Fwww.patreon.com%3A8000%2Fcheckout%2FCoachVee%3Frid%3D27683872" class="btn btn-fill">Join</a>
+                    </div>
+
+                    <!-- Card 3: Beginner Level -->
+                    <div class="pricing-card">
+                        <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=2669&auto=format&fit=crop" class="card-header-img" alt="Beginner Level">
+                        <div>
+                            <h3>Beginner Level | RE5</h3>
+                            <p style="font-size:0.9rem; color:#888;">Classroom Package</p>
+                            <div class="price">R500 <span style="font-size:1rem; color:#888;">/ month</span></div>
+                            <ul class="pricing-features">
+                                <li>Unlock your full study potential with this membership tier!</li>
+                                <li>Ideal for students with no previous experience in financial services.</li>
+                                <li>Foundational concepts with clear, introductory explanations.</li>
+                            </ul>
+                        </div>
+                        <a href="https://www.patreon.com/login?ru=https%3A%2F%2Fwww.patreon.com%3A8000%2Fcheckout%2FCoachVee%3Frid%3D25529321" class="btn btn-fill">Join</a>
+                    </div>
+
+                    <!-- Card 4: Kate's Referral Package -->
+                    <div class="pricing-card">
+                        <img src="https://images.unsplash.com/photo-1531545514256-b1400bc00f31?q=80&w=2574&auto=format&fit=crop" class="card-header-img" alt="Kate's Referral">
+                        <div>
+                            <h3>RE05 Kate's Referral</h3>
+                            <p style="font-size:0.9rem; color:#888;">Package</p>
+                            <div class="price">R510 <span style="font-size:1rem; color:#888;">/ month</span></div>
+                            <p style="font-size:0.8rem; text-align:left; color:#ccc; margin-bottom:10px;">Kate's VIPs only:</p>
+                            <ul class="pricing-features">
+                                <li>Video Lessons & Study Assistance: Access clear videos designed to guide you step by step.</li>
+                                <li>Study Tips for Success: Get valuable tips to make study sessions effective.</li>
+                                <li>RE05 Exam Prep Questions.</li>
+                                <li>RE05 Exam Prep Memo.</li>
+                            </ul>
+                        </div>
+                        <a href="https://www.patreon.com/login?ru=https%3A%2F%2Fwww.patreon.com%3A8000%2Fcheckout%2FCoachVee%3Frid%3D24613156" class="btn btn-fill">Join</a>
+                    </div>
+
+                    <!-- Card 5: Sharon's Referral Package -->
+                    <div class="pricing-card">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2576&auto=format&fit=crop" class="card-header-img" alt="Sharon's Referral">
+                        <div>
+                            <h3>RE05 Sharon's Referral</h3>
+                            <p style="font-size:0.9rem; color:#888;">Package</p>
+                            <div class="price">R520 <span style="font-size:1rem; color:#888;">/ month</span></div>
+                            <p style="font-size:0.8rem; text-align:left; color:#ccc; margin-bottom:10px;">Sharon's VIPs only:</p>
+                            <ul class="pricing-features">
+                                <li>Video Lessons & Study Assistance: Access clear videos designed to guide you step by step.</li>
+                                <li>Study Tips for Success: Get valuable tips to make study sessions effective.</li>
+                                <li>RE05 Exam Prep Questions.</li>
+                                <li>RE05 Exam Prep Memo.</li>
+                            </ul>
+                        </div>
+                        <a href="https://www.patreon.com/login?ru=https%3A%2F%2Fwww.patreon.com%3A8000%2Fcheckout%2FCoachVee%3Frid%3D25184334" class="btn btn-fill">Join</a>
+                    </div>
+
+                    <!-- Card 6: Company Group Classroom -->
+                    <div class="pricing-card">
+                        <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?q=80&w=2574&auto=format&fit=crop" class="card-header-img" alt="Company Group">
+                        <div>
+                            <h3>RE05 Company group</h3>
+                            <p style="font-size:0.9rem; color:#888;">classroom</p>
+                            <div class="price">R700 <span style="font-size:1rem; color:#888;">/ month</span></div>
+                            <ul class="pricing-features">
+                                <li>Group package to empower employees with structured RE5 exam prep.</li>
+                                <li>Video Lessons & Study Assistance.</li>
+                                <li>Live Q&A Sessions.</li>
+                                <li>Engage in Interactive discussions.</li>
+                                <li>200+ RE05 Questions & Detailed Memos.</li>
+                            </ul>
+                        </div>
+                        <a href="https://www.patreon.com/login?ru=https%3A%2F%2Fwww.patreon.com%3A8000%2Fcheckout%2FCoachVee%3Frid%3D25184680" class="btn btn-fill">Join</a>
+                    </div>
+
+                </div>
+                
+                <!-- Right Scroll Button -->
+                <button class="scroll-btn right" onclick="scrollGrid('right')"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Alumni Section -->
+    <section id="alumni" class="alumni">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Alumni</h2>
+                <div style="width: 50px; height: 3px; background: var(--accent-gold); margin: 20px auto;"></div>
+            </div>
+
+            <div class="alumni-grid">
+                <!-- Ethel -->
+                <div class="alumni-card reveal stagger-delay">
+                    <img src="ethel.png" alt="Ethel C." class="alumni-img">
+                    <h4 class="alumni-name">Ethel C.</h4>
+                    <p class="alumni-text">"Joined the Coach Vee RE5 class, passed the RE5 on her first attempt, and strengthened her career. She also holds a degree in Marketing."</p>
+                </div>
+                
+                <!-- Romeo -->
+                <div class="alumni-card reveal stagger-delay">
+                    <img src="romeo.png" alt="Romeo R." class="alumni-img">
+                    <h4 class="alumni-name">Romeo R.</h4>
+                    <p class="alumni-text">"Joined the Coach Vee RE5 class, passed the RE5, and built confidence and credibility in Client Services and promoted to an Executive Consultant."</p>
+                </div>
+                
+                <!-- Lungelo -->
+                <div class="alumni-card reveal stagger-delay">
+                    <img src="lungelo.png" alt="Lungelo M." class="alumni-img">
+                    <h4 class="alumni-name">Lungelo M.</h4>
+                    <p class="alumni-text">"Joined the Coach Vee RE5 class, passed the RE5, and progressed from Consultant to leadership in her role as Second in Command Team Leader within Client Services."</p>
+                </div>
+
+                <!-- Dhilup -->
+                <div class="alumni-card reveal stagger-delay">
+                    <img src="dhilup.png" alt="Dhilup A." class="alumni-img">
+                    <h4 class="alumni-name">Dhilup A.</h4>
+                    <p class="alumni-text">"Joined the Coach Vee RE5 class, passed the RE5, and leads in a high-performance environment in the Drive centre and now has progressed as a Team leader in Financial Services."</p>
+                </div>
+
+                <!-- Luzuko -->
+                <div class="alumni-card reveal stagger-delay">
+                    <img src="luzuko.png" alt="Luzuko G." class="alumni-img">
+                    <h4 class="alumni-name">Luzuko G.</h4>
+                    <p class="alumni-text">"Joined the Coach Vee RE5 class, passed the RE5, and opened new opportunities within the financial services industry."</p>
+                </div>
+
+                <!-- Tinyiko -->
+                <div class="alumni-card reveal stagger-delay">
+                    <img src="tinyiko.png" alt="Tinyiko Q." class="alumni-img">
+                    <h4 class="alumni-name">Tinyiko Q.</h4>
+                    <p class="alumni-text">"Joined the Coach Vee RE5 class, passed the RE5, and stepped into a leadership role."</p>
+                </div>
+            </div>
+
+            <!-- Reviews Section -->
+            <div id="reviews" class="reviews-section reveal">
+                <div class="text-center">
+                    <h3 style="margin-bottom: 10px; color: var(--text-dark);">What our members say</h3> <!-- Text color changed to black -->
+                    <img src="review_logo.png" alt="Google Customer Reviews" class="reviews-header-image"> <!-- Review logo as header -->
+                </div>
+
+                <div class="reviews-grid">
+                    <!-- Review Image 1 -->
+                    <div class="review-image-card reveal stagger-delay">
+                        <img src="review1.png" alt="Review 1">
+                    </div>
+
+                    <!-- Review Image 2 -->
+                    <div class="review-image-card reveal stagger-delay">
+                        <img src="review2.png" alt="Review 2">
+                    </div>
+
+                    <!-- Review Image 3 -->
+                    <div class="review-image-card reveal stagger-delay">
+                        <img src="review3.png" alt="Review 3">
+                    </div>
+
+                    <!-- Review Image 4 -->
+                    <div class="review-image-card reveal stagger-delay">
+                        <img src="review4.png" alt="Review 4">
+                    </div>
+                    
+                    <!-- Review Image 5 -->
+                    <div class="review-image-card reveal stagger-delay">
+                        <img src="review5.png" alt="Review 5">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section (Light) - No changes needed to this section itself -->
+    <section id="benefits" class="benefits">
+        <div class="container">
+            <div class="benefits-layout">
+                <div class="benefits-image reveal">
+                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2670&auto=format&fit=crop" alt="Study Smarter">
+                </div>
+                <div class="benefits-content reveal">
+                    <h2 style="margin-bottom: 30px;">Study Smarter. Feel Supported. <br>Pass with Confidence.</h2>
+                    <ul class="benefit-list">
+                        <li>
+                            <i class="fas fa-check-circle check-icon"></i>
+                            <div>
+                                <span class="gold-text">24/7 online access</span> via mobile app or student portal.<br>Study anytime, anywhere — at your pace.
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle check-icon"></i>
+                            <div>
+                                <span class="gold-text">Structured study guide + weekly checklist</span>.<br>Stay focused, organised, and on track.
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle check-icon"></i>
+                            <div>
+                                <span class="gold-text">1-month coaching & support</span>.<br>Clear guidance on key exam topics.
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle check-icon"></i>
+                            <div>
+                                <span class="gold-text">Optional live group sessions</span>.<br>Study with others, stay motivated, and accountable.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Development & Careers Section -->
+    <section id="development-careers" class="development-careers-section">
+        <div class="container development-careers-content">
+            <div class="development-programmes reveal">
+                <h2>DEVELOPMENT <br>PROGRAMMES</h2>
+                <ul>
+                    <li>
+                        <div>
+                            <span>• Career clarity & direction</span><br>
+                            Guidance to help you define goals and plan your next steps.
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <span>• Interview & workplace readiness</span><br>
+                            Practical preparation to present yourself with confidence.
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <span>• Professional skills workshops</span><br>
+                            Build communication, adaptability, and workplace competence.
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <span>• Confidence & personal development</span><br>
+                            Coaching to strengthen resilience and professional identity.
+                        </div>
+                    </li>
+                </ul>
+                <div class="plus-icon">+</div>
+            </div>
+
+            <div class="careers-info reveal">
+                <h2>CAREERS</h2>
+                <p style="margin-bottom: 10px;">Role open for a part time admin assistant</p>
+                <p>Please email CV to contact details below for job spec and application.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>5 Step Process</h2>
+                <p>How to Enrol in the RE5 Programme</p>
+            </div>
+
+            <div class="step-container">
+                <div class="step-line"></div>
+                
+                <div class="step reveal">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Create your student account</h3>
+                        <p>Sign up on the website using your personal email. Complete the one-month training payment.</p>
+                    </div>
+                </div>
+
+                <div class="step reveal">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Receive your confirmation emails</h3>
+                        <p>You'll receive two emails: a welcome message and your study pack (study guide + class contract).</p>
+                    </div>
+                </div>
+
+                <div class="step reveal">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Sign your class contract</h3>
+                        <p>Review the contract, sign it, and email it back to coachvee.info@gmail.com.</p>
+                    </div>
+                </div>
+
+                <div class="step reveal">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Access the online classroom</h3>
+                        <p>Log in, watch the intro videos, and work through the content at your own pace.</p>
+                    </div>
+                </div>
+
+                <div class="step reveal">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>Follow the weekly study plan</h3>
+                        <p>Use the recommended study schedule. Consistency leads to success.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center reveal" style="margin-top: 50px;">
+                <a href="https://www.patreon.com/cw/CoachVee" class="btn btn-fill">START TODAY</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Founder Section -->
+    <section id="about" class="founder">
+        <div class="container">
+            <div class="founder-layout">
+                <div class="founder-img reveal">
+                    <img src="coach_vee portrait.png" alt="Coach Vee">
+                </div>
+                <div class="founder-text reveal">
+                    <h2>About The Founder</h2>
+                    <div style="width: 50px; height: 3px; background: var(--accent-gold); margin: 20px 0;"></div>
+                    <p style="margin-bottom: 20px;">Driven by a deep passion for empowering people, Coach Vee is committed to building impactful training platforms that help aspiring professionals succeed in the financial services sector.</p>
+                    <p style="margin-bottom: 20px; color: #ccc;">With over six years of experience in the Financial Services Industry, she brings a strong combination of real-world regulatory knowledge, structured coaching, and learner-focused development.</p>
+                    <p style="font-style: italic; color: var(--accent-gold);">"Your future is created by what you do today, not tomorrow." — Robert Kiyosaki</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col reveal">
+                    <h4>Contact Us</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-phone"></i> +27 78 514 7472</p>
+                        <p><i class="fas fa-envelope"></i> coachvee.info@gmail.com</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Paulshof, Sandton</p>
+                    </div>
+                </div>
+                <div class="footer-col reveal">
+                    <h4>Social</h4>
+                    <p style="margin-bottom: 15px; color: #888;">Join our 200+ members.<br>Page name: The RE Hub</p>
+                    <a href="https://www.linkedin.com/groups/14629836" class="social-link"><i class="fab fa-linkedin"></i></a>
+                </div>
+                <div class="footer-col reveal">
+                    <h4>Careers</h4>
+                    <p style="color: #888;">Role open for a part time admin assistant. Please email CV to contact details.</p>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2026 Coach Vee. Independent Training Provider.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Ensure all assets are loaded before firing page load events
+        window.addEventListener('load', () => {
+            const reveals = document.querySelectorAll('.reveal');
+
+            const revealOnScroll = () => {
+                const windowHeight = window.innerHeight;
+                const elementVisible = 150;
+
+                reveals.forEach((reveal) => {
+                    const elementTop = reveal.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - elementVisible) {
+                        reveal.classList.add('active');
+                    }
+                });
+            };
+
+            // Navbar Background toggle on scroll
+            const navbar = document.getElementById('navbar');
+            const toggleNavbar = () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            };
+
+            window.addEventListener('scroll', revealOnScroll);
+            window.addEventListener('scroll', toggleNavbar);
+            
+            // Trigger once on load
+            revealOnScroll();
+            toggleNavbar(); // Check initial scroll position on load
+        });
+
+        // Pricing Carousel Scroll Function
+        function scrollGrid(direction) {
+            const grid = document.getElementById('pricingGrid');
+            // Dynamically calculate scroll amount based on card width + gap
+            const card = grid.querySelector('.pricing-card');
+            const cardWidth = card ? card.offsetWidth : 350;
+            const gap = 30; // Defined gap in CSS
+            const scrollAmount = cardWidth + gap;
+
+            if (direction === 'left') {
+                grid.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                grid.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        }
+    </script>
+</body>
+</html>
