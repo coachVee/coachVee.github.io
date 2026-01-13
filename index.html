@@ -643,20 +643,49 @@
             cursor: pointer;
         }
 
+        /* STYLED OVERLAY TEXT FOR VIDEO */
+        .video-overlay-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            background: rgba(5, 5, 5, 0.85); /* Darker background for readability */
+            border: 1px solid var(--accent-gold);
+            color: var(--bg-light);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            pointer-events: none; /* Let clicks pass through to the video container */
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            transition: opacity 0.4s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            white-space: nowrap;
+            /* Ensure it stays visible */
+            opacity: 1;
+        }
+        
+        /* Utility to hide text when user interacts */
+        .video-overlay-text.hidden {
+            opacity: 0;
+        }
+
+        .video-overlay-text i {
+            color: var(--accent-gold);
+            font-size: 1rem;
+        }
+
         .video-container video {
             display: block;
             width: 100%;
             height: auto;
-        }
-
-        .video-container::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
         }
 
         /* --- ABOUT FOUNDER --- */
@@ -979,6 +1008,14 @@
             .founder {
                 padding-top: 60px;
                 padding-bottom: 60px;
+            }
+
+            /* Adjust video overlay for small screens */
+            .video-overlay-text {
+                font-size: 0.7rem;
+                padding: 10px 20px;
+                white-space: normal;
+                width: 80%;
             }
         }
 
@@ -1445,6 +1482,12 @@
             
             <!-- Video added here -->
             <div class="video-container reveal">
+                <!-- Centered Overlay Text -->
+                <div class="video-overlay-text">
+                    <i class="fas fa-play-circle"></i>
+                    <span>Click or tap to hide text</span>
+                </div>
+                
                 <video id="signupVideo" width="100%" height="auto" autoplay loop muted playsinline webkit-playsinline disablepictureinpicture preload="auto">
                     <source src="sign_up.mp4" type="video/mp4">
                     Your browser does not support the video tag.
@@ -1552,16 +1595,28 @@
             revealOnScroll();
             toggleNavbar();
 
-            // Force video to play on mobile devices
+            // Video Handling
             const video = document.getElementById('signupVideo');
-            if (video) {
+            const videoContainer = document.querySelector('.video-container');
+            const overlayText = document.querySelector('.video-overlay-text');
+
+            if (video && videoContainer && overlayText) {
+                
+                // Hide instruction text ONLY on click, not on autoplay
+                videoContainer.addEventListener('click', function() {
+                    overlayText.classList.add('hidden');
+                    
+                    // If paused, play. If playing, user might be pausing, but we generally want to hide the overlay on first interaction
+                    if (video.paused) {
+                        video.play();
+                    }
+                });
+
+                // Fallback: If for some reason autoplay fails, the text is still there prompting the click.
                 video.muted = true;
                 video.play().catch(error => {
                     console.log('Video autoplay failed:', error);
-                    // Add play button if autoplay fails
-                    video.addEventListener('click', function() {
-                        this.play();
-                    });
+                    // The text remains visible, which is exactly what we want
                 });
             }
         });
